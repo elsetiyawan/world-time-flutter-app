@@ -7,7 +7,7 @@ class WorldTime {
   String time = ''; //Time in that location
   String flag = ''; //Flag of that location
   String url = ''; //Location url
-  bool isDaytime;
+  bool isDaytime = true;
 
   WorldTime({this.location, this.flag, this.url});
 

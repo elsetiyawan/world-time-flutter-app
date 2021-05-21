@@ -9,7 +9,7 @@ class _HomeState extends State<Home> {
   Map data = {};
   @override
   Widget build(BuildContext context) {
-    data = ModalRoute.of(context).settings.arguments;
+    data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
     print(data);
     // set background
     String bgImage = data['isDaytime'] ? 'day.png' : 'night.png';
@@ -28,8 +28,18 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               TextButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/location");
+                  onPressed: () async {
+                    dynamic result =
+                        await Navigator.pushNamed(context, "/location");
+                    print(result);
+                    setState(() {
+                      data = {
+                        "time": result['time'],
+                        "location": result['location'],
+                        "flag": result['flag'],
+                        "isDaytime": result['isDaytime'],
+                      };
+                    });
                   },
                   icon: Icon(
                     Icons.edit_location,
